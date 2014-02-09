@@ -1,0 +1,71 @@
+<?php
+	header("Content-Type: application/json");
+	
+	$month = $_GET["month"];
+	$year = $_GET["year"];
+	
+	$data = array();
+	
+	$wd_1 = date("N", mktime(0,0,0,$month,1,$year));
+	if($wd_1 == 1)
+		$c = 8;
+	else
+		$c = $wd_1;
+	
+	if($month == 1){
+		$month_before = 12;
+		$year_before = $year - 1;
+	} else {
+		$month_before = $month - 1;
+		$year_before = $year;
+	}
+	if($month == 12){
+		$month_after = 1;
+		$year_after = $year + 1;
+	} else {
+		$month_after = $month + 1;
+		$year_after = $year;
+	}
+	$month_count_before = cal_days_in_month(CAL_GREGORIAN, $month_before, $year);
+	for($day = $month_count_before-$c+2; $day <= $month_count_before; $day++){
+		$col = date("N", mktime(0,0,0,$month_before,$day,$year_before));
+		$row = 1;
+		$a = array();
+		$a["row"] = $row;
+		$a["col"] = $col;
+		$a["day"] = date("d", mktime(0,0,0,$month_before,$day,$year_before));
+		$a["month"] = date("m", mktime(0,0,0,$month_before,$day,$year_before));
+		$a["year"] = date("Y", mktime(0,0,0,$month_before,$day,$year_before));
+		array_push($data, $a);
+		//echo $col . " " . $row . " " .date("d.m.Y", mktime(0,0,0,$month_before,$day,$year_before)). "<br>";
+	}
+	$month_count = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+	for($day = 1; $day <= $month_count; $day++){
+		$col = date("N", mktime(0,0,0,$month,$day,$year));
+		$row = ceil($c / 7);
+		$a = array();
+		$a["row"] = $row;
+		$a["col"] = $col;
+		$a["day"] = date("d", mktime(0,0,0,$month,$day,$year));
+		$a["month"] = date("m", mktime(0,0,0,$month,$day,$year));
+		$a["year"] = date("Y", mktime(0,0,0,$month,$day,$year));
+		array_push($data, $a);
+		//echo $col . " " . $row .  " " .date("d.m.Y", mktime(0,0,0,$month,$day,$year)). "<br>";
+		$c++;
+	}
+	$max_days_after = (42-$c+1);
+	for($day = 1; $day <= $max_days_after; $day++){
+		$col = date("N", mktime(0,0,0,$month_after,$day,$year_after));
+		$row = ceil($c / 7);
+		$a = array();
+		$a["row"] = $row;
+		$a["col"] = $col;
+		$a["day"] = date("d", mktime(0,0,0,$month_after,$day,$year_after));
+		$a["month"] = date("m", mktime(0,0,0,$month_after,$day,$year_after));
+		$a["year"] = date("Y", mktime(0,0,0,$month_after,$day,$year_after));
+		array_push($data, $a);
+		//echo $col . " " . $row .  " " .date("d.m.Y", mktime(0,0,0,$month_after,$day,$year_after)). "<br>";
+		$c++;
+	}
+				echo json_encode($data);
+?>
