@@ -44,6 +44,7 @@
 		$a["day"] = date("d", mktime(0,0,0,$month_before,$day,$year_before));
 		$a["month"] = date("m", mktime(0,0,0,$month_before,$day,$year_before));
 		$a["year"] = date("Y", mktime(0,0,0,$month_before,$day,$year_before));
+		$a["enabled"] = false;
 		array_push($data, $a);
 		//echo $col . " " . $row . " " .date("d.m.Y", mktime(0,0,0,$month_before,$day,$year_before)). "<br>";
 	}
@@ -57,6 +58,7 @@
 		$a["day"] = date("d", mktime(0,0,0,$month,$day,$year));
 		$a["month"] = date("m", mktime(0,0,0,$month,$day,$year));
 		$a["year"] = date("Y", mktime(0,0,0,$month,$day,$year));
+		$a["enabled"] = true;
 		array_push($data, $a);
 		//echo $col . " " . $row .  " " .date("d.m.Y", mktime(0,0,0,$month,$day,$year)). "<br>";
 		$c++;
@@ -71,6 +73,7 @@
 		$a["day"] = date("d", mktime(0,0,0,$month_after,$day,$year_after));
 		$a["month"] = date("m", mktime(0,0,0,$month_after,$day,$year_after));
 		$a["year"] = date("Y", mktime(0,0,0,$month_after,$day,$year_after));
+		$a["enabled"] = false;
 		array_push($data, $a);
 		//echo $col . " " . $row .  " " .date("d.m.Y", mktime(0,0,0,$month_after,$day,$year_after)). "<br>";
 		$c++;
