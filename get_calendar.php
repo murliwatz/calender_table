@@ -67,5 +67,17 @@
 		//echo $col . " " . $row .  " " .date("d.m.Y", mktime(0,0,0,$month_after,$day,$year_after)). "<br>";
 		$c++;
 	}
-				echo json_encode($data);
+	
+	$obj["next_month"] = $month_after;
+	$obj["next_year"] = $year_after;
+	$obj["previous_month"] = $month_before;
+	$obj["previous_year"] = $year_before;
+	$obj["next_month_full"] = date("F",mktime(0,0,0,$month_after));
+	$obj["next_month_short"] = date("M",mktime(0,0,0,$month_after));
+	$obj["previous_month_full"] = date("F",mktime(0,0,0,$month_before));
+	$obj["previous_month_short"] = date("M",mktime(0,0,0,$month_before));
+	$obj["current_month_full"] = date("F",mktime(0,0,0,$month));
+	$obj["current_month_short"] = date("M",mktime(0,0,0,$month));
+	$obj["calendar_table"] = $data;
+	echo json_encode($obj);
 ?>
