@@ -101,7 +101,7 @@
 	$obj["previous_month_short"] = date("M",mktime(0,0,0,$month_before));
 	$obj["current_month_full"] = date("F",mktime(0,0,0,$month));
 	$obj["current_month_short"] = date("M",mktime(0,0,0,$month));
-	$obj["current_year"] = date("Y",mktime(0,0,0,$month,0,$year));
+	$obj["current_year"] = date("Y",mktime(0,0,0,1,1,$year));
 	$obj["calendar_table"] = $data;
 	echo json_encode($obj);
 ?>
