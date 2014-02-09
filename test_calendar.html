@@ -1,0 +1,119 @@
+<html>
+<head>
+<style>
+* {
+	margin:0;
+	padding:0;	
+}
+
+td {
+	border: solid #666 1px;	
+}
+
+.cal_enabled {
+	background:#09C;
+	text-align:right;		
+}
+
+.cal_disabled {
+	background:#CCC;
+	text-align:right;
+}
+
+#previous_month a, #next_month a {
+	background:#CCC;
+	display:inline-block;
+	width:50px;	
+	height:25px;
+	text-align:center;
+}
+</style>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+
+var next_month, previous_month, previous_year, next_year;
+
+$(document).ready(function(e) {
+	var table = "<table width='100%'>";
+	table += "<tr><th>Montag</th><th>Dienstag</th><th>Mittwoch</th><th>Donnerstag</th><th>Freitag</th><th>Samstag</th><th>Sonntag</th>";
+	for(var y = 1; y <= 6; y++){
+		table += "<tr>";
+		for(var x = 1; x <= 7; x++){
+			table += '<td width="14%">';
+			table += '<div id="cal_field_'+x+'_'+y+'" style="width:auto; height:80px;"></div>';
+			table += '</td>';
+		}
+		table += "</tr>";
+	}
+	table += "</table>";
+    $("#calendar_main").html(table);
+	currentMonth();
+});
+
+function currentMonth() {
+	$.post("get_calendar.php", {}, function(data){
+		next_month = data.next_month;
+		previous_month = data.previous_month;
+		next_year = data.next_year;
+		previous_year = data.previous_year;
+		$("#current_month").html(data.current_month_short);
+		$("#current_year").html(data.current_year);
+		for(var i = 0; i < data.calendar_table.length; i++){
+			if(data.calendar_table[i].enabled)
+				var c = '<div class="cal_enabled">'+data.calendar_table[i].day+'</div>';
+			else
+				var c = '<div class="cal_disabled">'+data.calendar_table[i].day+'</div>'
+			$("#cal_field_" + data.calendar_table[i].col + "_" + data.calendar_table[i].row).html(c);	
+		}
+	});
+}
+
+function previousMonth(){
+	$.post("get_calendar.php", {"month" : previous_month, "year" : previous_year}, function(data){
+		next_month = data.next_month;
+		previous_month = data.previous_month;
+		next_year = data.next_year;
+		previous_year = data.previous_year;
+		$("#current_month").html(data.current_month_short);
+		$("#current_year").html(data.current_year);
+		for(var i = 0; i < data.calendar_table.length; i++){
+			if(data.calendar_table[i].enabled)
+				var c = '<div class="cal_enabled">'+data.calendar_table[i].day+'</div>';
+			else
+				var c = '<div class="cal_disabled">'+data.calendar_table[i].day+'</div>'
+			$("#cal_field_" + data.calendar_table[i].col + "_" + data.calendar_table[i].row).html(c);	
+		}
+	});
+}
+
+function nextMonth(){
+	$.post("get_calendar.php", {"month" : next_month, "year" : next_year}, function(data){
+		next_month = data.next_month;
+		previous_month = data.previous_month;
+		next_year = data.next_year;
+		previous_year = data.previous_year;
+		$("#current_month").html(data.current_month_short);
+		$("#current_year").html(data.current_year);
+		for(var i = 0; i < data.calendar_table.length; i++){
+			if(data.calendar_table[i].enabled)
+				var c = '<div class="cal_enabled">'+data.calendar_table[i].day+'</div>';
+			else
+				var c = '<div class="cal_disabled">'+data.calendar_table[i].day+'</div>'
+			$("#cal_field_" + data.calendar_table[i].col + "_" + data.calendar_table[i].row).html(c);	
+		}
+	});
+}
+
+</script>
+</head>
+<body>
+	<div id="calendar">
+    	<span id="current_month"></span>
+        <span id="current_year"></span>
+        <span id="previous_month"><a href="javascript:previousMonth()">&lt;</a></span>
+        <span id="next_month"><a href="javascript:nextMonth()">&gt;</a></span>
+    	<div id="calendar_main">
+        </div>
+    </div>
+</body>
+</html>
