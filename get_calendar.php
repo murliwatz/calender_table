@@ -1,8 +1,16 @@
 <?php
 	header("Content-Type: application/json");
 	
-	$month = $_GET["month"];
-	$year = $_GET["year"];
+	if((isset($_GET["month"]) || !empty($_GET["month"])) && (isset($_GET["year"]) || !empty($_GET["year"]))){
+		$month = $_GET["month"];
+		$year = $_GET["year"];
+	} else if((isset($_POST["month"]) || !empty($_POST["month"])) && (isset($_POST["year"]) || !empty($_POST["year"]))){
+		$month = $_POST["month"];
+		$year = $_POST["year"];
+	} else {
+		$month = date("m");
+		$year = date("Y");	
+	}
 	
 	$data = array();
 	
