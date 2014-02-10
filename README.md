@@ -13,7 +13,7 @@ You can get data via 2 various methods (both return a json format):
 First method: get
 =================
 
-http://www.example.com/get_calendar.php?month=<month>&year=<year>
+http://www.example.com/get_calendar.php?month={month}&year={year}
 
 For instance, when you want to get the table of the date February 2014 then it looks like this:
 
@@ -28,6 +28,6 @@ This method is mostly used in ajax application.
 
 So when you use jQuery as examle, then it looks like this:
 
-$.post("get_calendar.php", {"month" : <month>, "year" : <year>}, function(data){
+$.post("get_calendar.php", {"month" : 2, "year" : 2014}, function(data){
 // ...
 });
